@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typed-design-system": "^0.0.228"
   },
   "devDependencies": {
     "@types/eslint": "^8",

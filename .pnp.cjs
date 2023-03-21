@@ -46,6 +46,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.5"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:18.2.0"],\
+            ["typed-design-system", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:0.0.228"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
             ["vite", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:4.2.1"]\
           ],\
@@ -4774,6 +4775,40 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["typed-design-system", [\
+        ["npm:0.0.228", {\
+          "packageLocation": "./.yarn/cache/typed-design-system-npm-0.0.228-e1050f374e-38948c840c.zip/node_modules/typed-design-system/",\
+          "packageDependencies": [\
+            ["typed-design-system", "npm:0.0.228"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:0.0.228", {\
+          "packageLocation": "./.yarn/__virtual__/typed-design-system-virtual-47068757f8/0/cache/typed-design-system-npm-0.0.228-e1050f374e-38948c840c.zip/node_modules/typed-design-system/",\
+          "packageDependencies": [\
+            ["typed-design-system", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:0.0.228"],\
+            ["@emotion/core", null],\
+            ["@emotion/styled", null],\
+            ["@types/emotion__core", null],\
+            ["@types/emotion__styled", null],\
+            ["@types/react", "npm:18.0.28"],\
+            ["@types/react-dom", "npm:18.0.11"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@emotion/core",\
+            "@emotion/styled",\
+            "@types/emotion__core",\
+            "@types/emotion__styled",\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["typescript", [\
         ["patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76", {\
           "packageLocation": "./.yarn/cache/typescript-patch-72dc6f164f-ab417a2f39.zip/node_modules/typescript/",\
@@ -4927,6 +4962,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.5"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:18.2.0"],\
+            ["typed-design-system", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:0.0.228"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
             ["vite", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:4.2.1"]\
           ],\
