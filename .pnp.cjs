@@ -47,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.5"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:18.2.0"],\
+            ["react-toastify", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:9.1.2"],\
             ["typed-design-system", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:0.0.228"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
             ["vite", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:4.2.1"]\
@@ -1779,6 +1780,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/clean-stack-npm-2.2.0-a8ce435a5c-2ac8cd2b2f.zip/node_modules/clean-stack/",\
           "packageDependencies": [\
             ["clean-stack", "npm:2.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["clsx", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/clsx-npm-1.2.1-77792dc182-30befca801.zip/node_modules/clsx/",\
+          "packageDependencies": [\
+            ["clsx", "npm:1.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4461,6 +4471,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-toastify", [\
+        ["npm:9.1.2", {\
+          "packageLocation": "./.yarn/cache/react-toastify-npm-9.1.2-b3ba16a74b-0b21851bbb.zip/node_modules/react-toastify/",\
+          "packageDependencies": [\
+            ["react-toastify", "npm:9.1.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:9.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/react-toastify-virtual-9fbc46868e/0/cache/react-toastify-npm-9.1.2-b3ba16a74b-0b21851bbb.zip/node_modules/react-toastify/",\
+          "packageDependencies": [\
+            ["react-toastify", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:9.1.2"],\
+            ["@types/react", "npm:18.0.28"],\
+            ["@types/react-dom", "npm:18.0.11"],\
+            ["clsx", "npm:1.2.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["readable-stream", [\
         ["npm:3.6.2", {\
           "packageLocation": "./.yarn/cache/readable-stream-npm-3.6.2-d2a6069158-bdcbe6c22e.zip/node_modules/readable-stream/",\
@@ -5253,6 +5290,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.5"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:18.2.0"],\
+            ["react-toastify", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:9.1.2"],\
             ["typed-design-system", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:0.0.228"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
             ["vite", "virtual:8a43ad4152e7f7fecc59fb9fe20af95f3b8d6d1512bac00954eeba6938a5d46f6364c1720ff7549dbb9b89a26a78f2d7d329bb2c3b0179b4a3e5e0e740cfc972#npm:4.2.1"]\
