@@ -39,11 +39,11 @@ export const ResourceListTemplate = ({
   return (
     <StyledResourceListWrapper>
       <StyledResourceButtonsWrapper>
-        <VStack css={{ flexGrow: 1 }}>
+        <VStack css={{ flexGrow: 1, flexBasis: 1 }}>
           <ResourceUrlTemplate setResourceList={handleResourceList} />
         </VStack>
-        <VStack css={{ flexGrow: 1 }}>
-          <ResourceImageTemplate />
+        <VStack css={{ flexGrow: 1, flexBasis: 1 }}>
+          <ResourceImageTemplate setResourceList={handleResourceList} />
         </VStack>
       </StyledResourceButtonsWrapper>
       <VStack css={{ padding: "10px", gap: "10px" }}>
@@ -69,6 +69,7 @@ const StyledResourceListWrapper = styled("div", {
   width: "100%",
   height: "100vh",
   borderRight: "1px solid $colors$gray80",
+  overflow: "scroll",
 })
 
 const StyledResourceButtonsWrapper = styled("div", {
