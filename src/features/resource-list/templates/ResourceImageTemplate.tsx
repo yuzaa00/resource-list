@@ -1,6 +1,7 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { ChangeEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
+import { errorMessages } from "../../common/constant"
 import { ResourceAddButton } from "../components/ResourceAddButton"
 import { ResourceSchema } from "../type"
 import { controlValidation } from "../utils/controlValidation"
@@ -43,8 +44,20 @@ export const ResourceImageTemplate = ({
       }
 
       Array.from(selectedFiles).forEach((file) => {
-        const uuid = self.crypto.randomUUID()
-        setResourceList({ id: uuid, name: file.name, file })
+        const reader = new FileReader()
+
+        reader.onload = () => {
+          setResourceList({
+            id: self.crypto.randomUUID(),
+            name: file.name,
+            url: reader.result as string,
+            file,
+          })
+        }
+        reader.onerror = () => {
+          toast(errorMessages.FAILED_REQUEST, { type: "error" })
+        }
+        reader.readAsDataURL(file)
       })
     }
 
