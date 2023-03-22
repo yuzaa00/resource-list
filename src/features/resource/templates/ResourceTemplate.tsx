@@ -2,13 +2,19 @@ import { useState } from "react"
 import { styled } from "../../../stitches.config"
 import { ResourceListTemplate } from "../../resource-list/templates/ResourceListTemplate"
 import { ResourceSchema } from "../../resource-list/type"
-import { ResourceViewer } from "../../resource-viewer/components/ResourceViewer"
+import { ResourceViewerTemplate } from "../../resource-viewer/templates/ResourceViewerTemplate"
 
 export const ResourceTemplate = () => {
-  const [currentResource, setCurrentResource] = useState<ResourceSchema>()
+  const [currentResource, setCurrentResource] = useState<ResourceSchema | null>(
+    null
+  )
 
   const handleResourceClick = (resource: ResourceSchema) => {
     setCurrentResource(resource)
+  }
+
+  const handleCloseClick = () => {
+    setCurrentResource(null)
   }
 
   return (
@@ -17,7 +23,12 @@ export const ResourceTemplate = () => {
         currentResourceId={currentResource?.id}
         onResourceClick={handleResourceClick}
       />
-      <ResourceViewer />
+      {currentResource && (
+        <ResourceViewerTemplate
+          currentResource={currentResource}
+          onCloseClick={handleCloseClick}
+        />
+      )}
     </ResourceTemplateWrapper>
   )
 }
