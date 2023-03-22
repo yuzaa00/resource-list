@@ -1,5 +1,10 @@
+import { MainTemplate } from "./features/main/templates/MainTemplate"
+import { globalStyles } from "./stitches.config"
+
 function App() {
-  return <h1>Hello World</h1>
+  globalStyles()
+
+  return <MainTemplate />
 }
 
 export default App
