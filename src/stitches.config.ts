@@ -3,6 +3,7 @@ import { createStitches } from "@stitches/react"
 export const { styled, globalCss, keyframes } = createStitches({
   theme: {
     colors: {
+      gray80: "#C4C4C4",
       gray90: "#E5E5E5",
       gray97: "#F7F7F7",
       gray100: "#FFFFFF",
