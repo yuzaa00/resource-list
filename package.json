@@ -9,6 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    "antd": "^5.3.2",
+=======
+    "@stitches/react": "^1.2.8",
+>>>>>>> e94c5cd (chore: add stitches/react)
+>>>>>>> 27cc8ed (chore: add stitches/react)
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typed-design-system": "^0.0.228"
