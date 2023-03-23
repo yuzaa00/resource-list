@@ -25,51 +25,54 @@ export const ResourceImageTemplate = ({
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const { files: selectedFiles } = e.target
 
-    const processUpload = async () => {
-      if (!selectedFiles) {
-        return toast("선택된 파일이 없습니다", { type: "error" })
-      }
+    const processUpload = () => {
+      return new Promise<string>((resolve, reject) => {
+        if (!selectedFiles) {
+          return reject("선택된 파일이 없습니다")
+        }
 
-      const isAcceptableFile = Array.from(selectedFiles).every((file) =>
-        Object.values(acceptableMimeType).includes(file.type)
-      )
-
-      if (!isAcceptableFile) {
-        return toast(
-          `${Object.keys(acceptableMimeType).join(
-            ","
-          )} 파일만 업로드할 수 있어요`,
-          { type: "error" }
+        const isAcceptableFile = Array.from(selectedFiles).every((file) =>
+          Object.values(acceptableMimeType).includes(file.type)
         )
-      }
 
-      Array.from(selectedFiles).forEach((file) => {
-        const reader = new FileReader()
+        if (!isAcceptableFile) {
+          return reject(
+            `${Object.keys(acceptableMimeType).join(
+              ","
+            )} 파일만 업로드할 수 있어요`
+          )
+        }
 
-        reader.onload = () => {
-          onAddResourceList({
-            id: self.crypto.randomUUID(),
-            name: file.name,
-            url: reader.result as string,
-            file,
-          })
-        }
-        reader.onerror = () => {
-          toast(errorMessages.FAILED_REQUEST, { type: "error" })
-        }
-        reader.readAsDataURL(file)
+        Array.from(selectedFiles).forEach((file) => {
+          const reader = new FileReader()
+
+          reader.onload = () => {
+            onAddResourceList({
+              id: self.crypto.randomUUID(),
+              name: file.name,
+              url: reader.result as string,
+              file,
+            })
+          }
+          reader.onerror = () => {
+            return reject(errorMessages.FAILED_REQUEST)
+          }
+          reader.readAsDataURL(file)
+        })
+
+        resolve("등록에 성공했어요")
       })
     }
 
     setLoading(true)
+
     controlValidation()
       .then(processUpload)
-      .then(() => toast("등록에 성공했어요", { type: "success" }))
-      .catch((error) => {
-        toast(error, { type: "error" })
-      })
+      .then((result) => toast(result, { type: "success" }))
+      .catch((error) => toast(error, { type: "error" }))
       .finally(() => {
         setLoading(false)
+        /** 인풋 초기화 */
         if (!fileRef.current) return
         fileRef.current.value = ""
       })
