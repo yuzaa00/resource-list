@@ -1,7 +1,8 @@
 import { ChangeEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
-import { errorMessages } from "../../common/constant"
+import { errorMessages, successMessage } from "../../common/constant"
+import { AddResourceError } from "../../common/customError"
 import { ResourceSchema } from "../../resource/type"
 import { ResourceAddButton } from "../components/ResourceAddButton"
 import { controlValidation } from "../utils/controlValidation"
@@ -22,60 +23,60 @@ export const ResourceImageTemplate = ({
     PNG: "image/png",
   }
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files: selectedFiles } = e.target
 
-    const processUpload = () => {
-      return new Promise<string>((resolve, reject) => {
-        if (!selectedFiles) {
-          return reject("선택된 파일이 없습니다")
-        }
+    const addFile = async () => {
+      if (!selectedFiles) {
+        throw new AddResourceError(errorMessages.NO_FILE_SELECTED, "invalid")
+      }
 
-        const isAcceptableFile = Array.from(selectedFiles).every((file) =>
-          Object.values(acceptableMimeType).includes(file.type)
+      const isAcceptableFile = Array.from(selectedFiles).every((file) =>
+        Object.values(acceptableMimeType).includes(file.type)
+      )
+
+      if (!isAcceptableFile) {
+        throw new AddResourceError(
+          errorMessages.UNACCEPTABLE_FILE(
+            Object.keys(acceptableMimeType).join(",")
+          ),
+          "invalid"
         )
+      }
 
-        if (!isAcceptableFile) {
-          return reject(
-            `${Object.keys(acceptableMimeType).join(
-              ","
-            )} 파일만 업로드할 수 있어요`
-          )
+      Array.from(selectedFiles).forEach((file) => {
+        const reader = new FileReader()
+        reader.onload = () => {
+          onAddResourceList({
+            id: self.crypto.randomUUID(),
+            name: file.name,
+            url: reader.result as string,
+            file,
+          })
         }
-
-        Array.from(selectedFiles).forEach((file) => {
-          const reader = new FileReader()
-
-          reader.onload = () => {
-            onAddResourceList({
-              id: self.crypto.randomUUID(),
-              name: file.name,
-              url: reader.result as string,
-              file,
-            })
-          }
-          reader.onerror = () => {
-            return reject(errorMessages.FAILED_REQUEST)
-          }
-          reader.readAsDataURL(file)
-        })
-
-        resolve("등록에 성공했어요")
+        reader.onerror = () => {
+          throw new AddResourceError(errorMessages.FAILED_REQUEST, "failed")
+        }
+        reader.readAsDataURL(file)
       })
     }
 
-    setLoading(true)
+    try {
+      setLoading(true)
 
-    controlValidation()
-      .then(processUpload)
-      .then((result) => toast(result, { type: "success" }))
-      .catch((error) => toast(error, { type: "error" }))
-      .finally(() => {
-        setLoading(false)
-        /** 인풋 초기화 */
-        if (!fileRef.current) return
-        fileRef.current.value = ""
-      })
+      await controlValidation()
+      await addFile()
+
+      toast(successMessage.SUCCESS_REQUEST, { type: "success" })
+    } catch (error) {
+      if (error instanceof AddResourceError) {
+        toast(error.message, { type: "error" })
+      }
+    } finally {
+      setLoading(false)
+      /** 인풋 초기화 */
+      if (fileRef.current) fileRef.current.value = ""
+    }
   }
 
   return (
