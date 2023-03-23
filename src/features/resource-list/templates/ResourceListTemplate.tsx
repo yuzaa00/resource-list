@@ -9,12 +9,12 @@ import { resourceDummyList } from "../dummyData"
 
 interface ResourceListTemplateProps {
   currentResourceId?: string
-  onResourceClick: (resource: ResourceSchema) => void
+  onSetCurrentResource: (resource: ResourceSchema | null) => void
 }
 
 export const ResourceListTemplate = ({
   currentResourceId,
-  onResourceClick,
+  onSetCurrentResource,
 }: ResourceListTemplateProps) => {
   const [resourceList, setResourceList] = useState(resourceDummyList)
 
@@ -22,18 +22,31 @@ export const ResourceListTemplate = ({
     setResourceList((prevList) => [newList, ...prevList])
   }
 
-  const handleClick = (resource: ResourceSchema) => () => {
-    onResourceClick(resource)
+  const handleItemClick = (resource: ResourceSchema) => () => {
+    onSetCurrentResource(resource)
   }
 
-  const handleEditClick = (id: string) => (name: string) => {
+  const handleEditClick = (resource: ResourceSchema) => (name: string) => {
     setResourceList((prevList) =>
-      prevList.map((list) => (list.id === id ? { ...list, name } : list))
+      prevList.map((list) =>
+        list.id === resource.id ? { ...list, name } : list
+      )
     )
+
+    if (currentResourceId === resource.id) {
+      onSetCurrentResource({ ...resource, name })
+    }
   }
 
   const handleRemoveClick = (id: string) => {
-    setResourceList((prevList) => prevList.filter((list) => list.id !== id))
+    setResourceList((prevList) =>
+      prevList.filter((list) => {
+        return list.id !== id
+      })
+    )
+    if (currentResourceId === id) {
+      onSetCurrentResource(null)
+    }
   }
 
   return (
@@ -52,8 +65,8 @@ export const ResourceListTemplate = ({
             <ResourceItem
               defaultName={rsc.name}
               isActive={rsc.id === currentResourceId}
-              onClick={handleClick(rsc)}
-              onEditClick={handleEditClick(rsc.id)}
+              onItemClick={handleItemClick(rsc)}
+              onEditClick={handleEditClick(rsc)}
               onRemoveClick={() => handleRemoveClick(rsc.id)}
             />
           </Fragment>

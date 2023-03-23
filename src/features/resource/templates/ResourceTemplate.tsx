@@ -9,7 +9,7 @@ export const ResourceTemplate = () => {
     null
   )
 
-  const handleResourceClick = (resource: ResourceSchema) => {
+  const handleSetCurrentResource = (resource: ResourceSchema | null) => {
     setCurrentResource(resource)
   }
 
@@ -22,10 +22,10 @@ export const ResourceTemplate = () => {
       <VStack css={{ width: "280px", flexShrink: 0 }}>
         <ResourceListTemplate
           currentResourceId={currentResource?.id}
-          onResourceClick={handleResourceClick}
+          onSetCurrentResource={handleSetCurrentResource}
         />
       </VStack>
-      <VStack css={{ width: "100%", flexShirink: 1 }}>
+      <VStack css={{ width: "100%", flexShrink: 1 }}>
         {currentResource && (
           <ResourceViewerTemplate
             currentResource={currentResource}

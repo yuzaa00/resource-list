@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react"
+import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from "react"
 import { TypedIcon } from "typed-design-system"
 import { styled } from "../../../stitches.config"
 import { Input } from "../../common/components/Input"
@@ -6,7 +6,7 @@ import { Input } from "../../common/components/Input"
 interface ResourceItemProps {
   defaultName: string
   isActive?: boolean
-  onClick: () => void
+  onItemClick: () => void
   onEditClick: (name: string) => void
   onRemoveClick: () => void
 }
@@ -14,40 +14,48 @@ interface ResourceItemProps {
 export const ResourceItem = ({
   defaultName,
   isActive,
-  onClick,
+  onItemClick,
   onEditClick,
   onRemoveClick,
 }: ResourceItemProps) => {
   const [name, setName] = useState(defaultName)
   const [isEditMode, setEditMode] = useState(false)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleItemClick = () => {
+    onItemClick()
+  }
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === "Enter") {
       setEditMode(false)
+      onEditClick(name)
     }
   }
 
-  const handleClick = () => {
-    onClick()
-  }
-
-  const handleEditClick = () => {
+  const handleEditClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
     setEditMode(!isEditMode)
     onEditClick(name)
   }
 
-  const handleRemoveClick = () => {
+  const handleRemoveClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
     onRemoveClick()
   }
 
   return (
-    <ItemWrapper isActive={isActive} onClick={handleClick}>
+    <ItemWrapper isActive={isActive} onClick={handleItemClick}>
       {isEditMode ? (
-        <Input value={name} onChange={handleChange} onKeyDown={handleKeyDown} />
+        <Input
+          value={name}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onClick={(e) => e.stopPropagation()}
+        />
       ) : (
         <ItemName>{name}</ItemName>
       )}
