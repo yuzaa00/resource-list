@@ -9,18 +9,18 @@ import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
 import { Input } from "../../common/components/Input"
 import { VStack } from "../../common/components/Stack"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceAddButton } from "../components/ResourceAddButton"
-import { ResourceSchema } from "../type"
 import { controlValidation } from "../utils/controlValidation"
 import { convertUrl } from "../utils/convertUrl"
 import { validateUrl } from "../utils/validateUrl"
 
 interface ResourceUrlTemplateProps {
-  setResourceList: (newList: ResourceSchema) => void
+  onAddResourceList: (newList: ResourceSchema) => void
 }
 
 export const ResourceUrlTemplate = ({
-  setResourceList,
+  onAddResourceList,
 }: ResourceUrlTemplateProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -47,7 +47,7 @@ export const ResourceUrlTemplate = ({
           const convertedUrl = convertUrl(resourceUrl)
           const uuid = self.crypto.randomUUID()
 
-          setResourceList({ id: uuid, name: convertedUrl, url: convertedUrl })
+          onAddResourceList({ id: uuid, name: convertedUrl, url: convertedUrl })
           setInputOpen(!isInputOpen)
           setResourceUrl("")
           setErrorMessage("")

@@ -2,16 +2,16 @@ import { ChangeEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
 import { errorMessages } from "../../common/constant"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceAddButton } from "../components/ResourceAddButton"
-import { ResourceSchema } from "../type"
 import { controlValidation } from "../utils/controlValidation"
 
 interface ResourceIamgeTemplateProps {
-  setResourceList: (resource: ResourceSchema) => void
+  onAddResourceList: (resource: ResourceSchema) => void
 }
 
 export const ResourceImageTemplate = ({
-  setResourceList,
+  onAddResourceList,
 }: ResourceIamgeTemplateProps) => {
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -47,7 +47,7 @@ export const ResourceImageTemplate = ({
         const reader = new FileReader()
 
         reader.onload = () => {
-          setResourceList({
+          onAddResourceList({
             id: self.crypto.randomUUID(),
             name: file.name,
             url: reader.result as string,

@@ -1,15 +1,15 @@
 import { useState } from "react"
-import { styled } from "../../../stitches.config"
+import { HStack, VStack } from "../../common/components/Stack"
 import { ResourceListTemplate } from "../../resource-list/templates/ResourceListTemplate"
-import { ResourceSchema } from "../../resource-list/type"
 import { ResourceViewerTemplate } from "../../resource-viewer/templates/ResourceViewerTemplate"
+import { ResourceSchema } from "../type"
 
 export const ResourceTemplate = () => {
   const [currentResource, setCurrentResource] = useState<ResourceSchema | null>(
     null
   )
 
-  const handleResourceClick = (resource: ResourceSchema) => {
+  const handleSetCurrentResource = (resource: ResourceSchema | null) => {
     setCurrentResource(resource)
   }
 
@@ -18,22 +18,21 @@ export const ResourceTemplate = () => {
   }
 
   return (
-    <ResourceTemplateWrapper>
-      <ResourceListTemplate
-        currentResourceId={currentResource?.id}
-        onResourceClick={handleResourceClick}
-      />
-      {currentResource && (
-        <ResourceViewerTemplate
-          currentResource={currentResource}
-          onCloseClick={handleCloseClick}
+    <HStack css={{ background: "$gray90" }}>
+      <VStack css={{ width: "280px", flexShrink: 0 }}>
+        <ResourceListTemplate
+          currentResourceId={currentResource?.id}
+          onSetCurrentResource={handleSetCurrentResource}
         />
-      )}
-    </ResourceTemplateWrapper>
+      </VStack>
+      <VStack css={{ width: "100%", flexShrink: 1 }}>
+        {currentResource && (
+          <ResourceViewerTemplate
+            currentResource={currentResource}
+            onCloseClick={handleCloseClick}
+          />
+        )}
+      </VStack>
+    </HStack>
   )
 }
-
-const ResourceTemplateWrapper = styled("div", {
-  display: "flex",
-  background: "$gray90",
-})

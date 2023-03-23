@@ -2,48 +2,61 @@ import { Fragment, useState } from "react"
 import { ResourceImageTemplate } from "./ResourceImageTemplate"
 import { ResourceUrlTemplate } from "./ResourceUrlTemplate"
 import { styled } from "../../../stitches.config"
-import { VStack } from "../../common/components/Stack"
+import { HStack, VStack } from "../../common/components/Stack"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceItem } from "../components/ResourceItem"
 import { resourceDummyList } from "../dummyData"
-import { ResourceSchema } from "../type"
 
 interface ResourceListTemplateProps {
   currentResourceId?: string
-  onResourceClick: (resource: ResourceSchema) => void
+  onSetCurrentResource: (resource: ResourceSchema | null) => void
 }
 
 export const ResourceListTemplate = ({
   currentResourceId,
-  onResourceClick,
+  onSetCurrentResource,
 }: ResourceListTemplateProps) => {
   const [resourceList, setResourceList] = useState(resourceDummyList)
 
-  const handleResourceList = (newList: ResourceSchema) => {
+  const handleAddResourceList = (newList: ResourceSchema) => {
     setResourceList((prevList) => [newList, ...prevList])
   }
 
-  const handleClick = (resource: ResourceSchema) => () => {
-    onResourceClick(resource)
+  const handleItemClick = (resource: ResourceSchema) => () => {
+    onSetCurrentResource(resource)
   }
 
-  const handleEditClick = (id: string) => (name: string) => {
+  const handleEditClick = (resource: ResourceSchema) => (name: string) => {
     setResourceList((prevList) =>
-      prevList.map((list) => (list.id === id ? { ...list, name } : list))
+      prevList.map((list) =>
+        list.id === resource.id ? { ...list, name } : list
+      )
     )
+
+    if (currentResourceId === resource.id) {
+      onSetCurrentResource({ ...resource, name })
+    }
   }
 
   const handleRemoveClick = (id: string) => {
-    setResourceList((prevList) => prevList.filter((list) => list.id !== id))
+    setResourceList((prevList) =>
+      prevList.filter((list) => {
+        return list.id !== id
+      })
+    )
+    if (currentResourceId === id) {
+      onSetCurrentResource(null)
+    }
   }
 
   return (
     <StyledResourceListWrapper>
       <StyledResourceButtonsWrapper>
-        <VStack css={{ flexGrow: 1, flexBasis: 1 }}>
-          <ResourceUrlTemplate setResourceList={handleResourceList} />
+        <VStack css={{ flexBasis: 1, flexGrow: 1 }}>
+          <ResourceUrlTemplate onAddResourceList={handleAddResourceList} />
         </VStack>
-        <VStack css={{ flexGrow: 1, flexBasis: 1 }}>
-          <ResourceImageTemplate setResourceList={handleResourceList} />
+        <VStack css={{ flexBasis: 1, flexGrow: 1 }}>
+          <ResourceImageTemplate onAddResourceList={handleAddResourceList} />
         </VStack>
       </StyledResourceButtonsWrapper>
       <VStack css={{ padding: "10px", gap: "10px" }}>
@@ -52,8 +65,8 @@ export const ResourceListTemplate = ({
             <ResourceItem
               defaultName={rsc.name}
               isActive={rsc.id === currentResourceId}
-              onClick={handleClick(rsc)}
-              onEditClick={handleEditClick(rsc.id)}
+              onItemClick={handleItemClick(rsc)}
+              onEditClick={handleEditClick(rsc)}
               onRemoveClick={() => handleRemoveClick(rsc.id)}
             />
           </Fragment>
@@ -65,15 +78,12 @@ export const ResourceListTemplate = ({
 
 const StyledResourceListWrapper = styled("div", {
   background: "$gray97",
-  maxWidth: "280px",
-  width: "100%",
   height: "100vh",
   borderRight: "1px solid $colors$gray80",
   overflow: "scroll",
 })
 
-const StyledResourceButtonsWrapper = styled("div", {
-  display: "flex",
+const StyledResourceButtonsWrapper = styled(HStack, {
   background: "$gray100",
   boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
   padding: "10px",

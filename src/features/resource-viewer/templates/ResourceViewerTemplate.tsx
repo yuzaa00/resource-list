@@ -1,4 +1,4 @@
-import { ResourceSchema } from "../../resource-list/type"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceViewer } from "../components/ResourceViewer"
 
 interface ResourceViewerTemplateProps {
@@ -11,13 +11,6 @@ export const ResourceViewerTemplate = ({
   onCloseClick,
 }: ResourceViewerTemplateProps) => {
   return (
-    <>
-      {currentResource && (
-        <ResourceViewer
-          resource={currentResource}
-          onCloseClick={onCloseClick}
-        />
-      )}
-    </>
+    <ResourceViewer resource={currentResource} onCloseClick={onCloseClick} />
   )
 }

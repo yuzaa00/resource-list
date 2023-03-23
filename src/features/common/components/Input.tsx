@@ -16,6 +16,7 @@ export const Input = styled("input", {
   lineHeight: 1,
   boxShadow: "0 0 0 1px $colors$blue50",
   background: "$gray97",
+  cursor: "text",
 
   variants: {
     isError: {
