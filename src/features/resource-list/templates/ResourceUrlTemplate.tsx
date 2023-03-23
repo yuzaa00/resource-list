@@ -1,16 +1,11 @@
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react"
+import { ChangeEvent, KeyboardEvent, useState } from "react"
 import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
 import { Input } from "../../common/components/Input"
 import { VStack } from "../../common/components/Stack"
 import { successMessage } from "../../common/constant"
 import { AddResourceError } from "../../common/customError"
+import { useFocus } from "../../common/hooks/useFocus"
 import { ResourceSchema } from "../../resource/type"
 import { ResourceAddButton } from "../components/ResourceAddButton"
 import { controlValidation } from "../utils/controlValidation"
@@ -24,7 +19,7 @@ interface ResourceUrlTemplateProps {
 export const ResourceUrlTemplate = ({
   onAddResourceList,
 }: ResourceUrlTemplateProps) => {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useFocus()
 
   const [isInputOpen, setInputOpen] = useState(false)
   const [resourceUrl, setResourceUrl] = useState("")
@@ -75,10 +70,6 @@ export const ResourceUrlTemplate = ({
       }
     }
   }
-
-  useLayoutEffect(() => {
-    if (inputRef.current !== null) inputRef.current.focus()
-  })
 
   return (
     <UrlTemplateWrapper>

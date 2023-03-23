@@ -60,14 +60,14 @@ export const ResourceListTemplate = ({
         </VStack>
       </StyledResourceButtonsWrapper>
       <VStack css={{ padding: "10px", gap: "10px" }}>
-        {resourceList.map((rsc) => (
-          <Fragment key={rsc.id}>
+        {resourceList.map((resource) => (
+          <Fragment key={resource.id}>
             <ResourceItem
-              defaultName={rsc.name}
-              isActive={rsc.id === currentResourceId}
-              onItemClick={handleItemClick(rsc)}
-              onEditClick={handleEditClick(rsc)}
-              onRemoveClick={() => handleRemoveClick(rsc.id)}
+              defaultName={resource.name}
+              isActive={resource.id === currentResourceId}
+              onItemClick={handleItemClick(resource)}
+              onEditClick={handleEditClick(resource)}
+              onRemoveClick={() => handleRemoveClick(resource.id)}
             />
           </Fragment>
         ))}
