@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { ResourceImageTemplate } from "./ResourceImageTemplate"
 import { ResourceUrlTemplate } from "./ResourceUrlTemplate"
 import { styled } from "../../../stitches.config"
@@ -20,6 +21,8 @@ export const ResourceListTemplate = ({
   currentResourceId,
   onSetCurrentResource,
 }: ResourceListTemplateProps) => {
+  const navigate = useNavigate()
+
   const [resourceList, setResourceList] = useState(
     getListFromLocalStorage() || resourceDummyList
   )
@@ -30,6 +33,7 @@ export const ResourceListTemplate = ({
 
   const handleItemClick = (resource: ResourceSchema) => () => {
     onSetCurrentResource(resource)
+    navigate(`/${resource.id}`)
   }
 
   const handleEditClick = (resource: ResourceSchema) => (name: string) => {
