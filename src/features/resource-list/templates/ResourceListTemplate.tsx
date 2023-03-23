@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { ResourceImageTemplate } from "./ResourceImageTemplate"
 import { ResourceUrlTemplate } from "./ResourceUrlTemplate"
 import { styled } from "../../../stitches.config"
@@ -6,6 +6,10 @@ import { HStack, VStack } from "../../common/components/Stack"
 import { ResourceSchema } from "../../resource/type"
 import { ResourceItem } from "../components/ResourceItem"
 import { resourceDummyList } from "../dummyData"
+import {
+  getListFromLocalStorage,
+  setListToLocalStorage,
+} from "../utils/localStorage"
 
 interface ResourceListTemplateProps {
   currentResourceId?: string
@@ -16,10 +20,12 @@ export const ResourceListTemplate = ({
   currentResourceId,
   onSetCurrentResource,
 }: ResourceListTemplateProps) => {
-  const [resourceList, setResourceList] = useState(resourceDummyList)
+  const [resourceList, setResourceList] = useState(
+    getListFromLocalStorage() || resourceDummyList
+  )
 
-  const handleAddResourceList = (newList: ResourceSchema) => {
-    setResourceList((prevList) => [newList, ...prevList])
+  const handleAddResourceList = (newResource: ResourceSchema) => {
+    setResourceList((prevList) => [newResource, ...prevList])
   }
 
   const handleItemClick = (resource: ResourceSchema) => () => {
@@ -32,7 +38,6 @@ export const ResourceListTemplate = ({
         list.id === resource.id ? { ...list, name } : list
       )
     )
-
     if (currentResourceId === resource.id) {
       onSetCurrentResource({ ...resource, name })
     }
@@ -48,6 +53,10 @@ export const ResourceListTemplate = ({
       onSetCurrentResource(null)
     }
   }
+
+  useEffect(() => {
+    setListToLocalStorage(resourceList)
+  }, [resourceList])
 
   return (
     <StyledResourceListWrapper>
