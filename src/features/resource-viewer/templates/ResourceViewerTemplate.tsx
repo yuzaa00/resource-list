@@ -11,13 +11,6 @@ export const ResourceViewerTemplate = ({
   onCloseClick,
 }: ResourceViewerTemplateProps) => {
   return (
-    <>
-      {currentResource && (
-        <ResourceViewer
-          resource={currentResource}
-          onCloseClick={onCloseClick}
-        />
-      )}
-    </>
+    <ResourceViewer resource={currentResource} onCloseClick={onCloseClick} />
   )
 }

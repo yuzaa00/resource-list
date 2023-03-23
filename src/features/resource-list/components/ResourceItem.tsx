@@ -89,7 +89,7 @@ const ItemWrapper = styled("div", {
 
 const ItemName = styled("div", {
   lineHeight: "16px",
-  widht: "100%",
+  width: "100%",
   wordBreak: "break-word",
   textOverflow: "ellipsis",
   overflow: "hidden",
