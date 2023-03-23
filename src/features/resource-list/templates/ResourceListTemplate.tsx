@@ -1,60 +1,48 @@
-import { Fragment, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Fragment, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { ResourceImageTemplate } from "./ResourceImageTemplate"
 import { ResourceUrlTemplate } from "./ResourceUrlTemplate"
 import { styled } from "../../../stitches.config"
 import { HStack, VStack } from "../../common/components/Stack"
+import { useResourceContext } from "../../resource/components/ResourceProvider"
 import { ResourceSchema } from "../../resource/type"
 import { ResourceItem } from "../components/ResourceItem"
-import { resourceDummyList } from "../dummyData"
-import {
-  getListFromLocalStorage,
-  setListToLocalStorage,
-} from "../utils/localStorage"
+import { setListToLocalStorage } from "../utils/localStorage"
 
-interface ResourceListTemplateProps {
-  currentResourceId?: string
-  onSetCurrentResource: (resource: ResourceSchema | null) => void
-}
-
-export const ResourceListTemplate = ({
-  currentResourceId,
-  onSetCurrentResource,
-}: ResourceListTemplateProps) => {
+export const ResourceListTemplate = () => {
   const navigate = useNavigate()
-
-  const [resourceList, setResourceList] = useState(
-    getListFromLocalStorage() || resourceDummyList
-  )
+  const { currentResourceId } = useParams()
+  const { resourceList, updateResourceList, updateCurrentResource } =
+    useResourceContext()
 
   const handleAddResourceList = (newResource: ResourceSchema) => {
-    setResourceList((prevList) => [newResource, ...prevList])
+    updateResourceList((prevList) => [newResource, ...prevList])
   }
 
   const handleItemClick = (resource: ResourceSchema) => () => {
-    onSetCurrentResource(resource)
+    updateCurrentResource(resource)
     navigate(`/${resource.id}`)
   }
 
   const handleEditClick = (resource: ResourceSchema) => (name: string) => {
-    setResourceList((prevList) =>
+    updateResourceList((prevList) =>
       prevList.map((list) =>
         list.id === resource.id ? { ...list, name } : list
       )
     )
     if (currentResourceId === resource.id) {
-      onSetCurrentResource({ ...resource, name })
+      updateCurrentResource({ ...resource, name })
     }
   }
 
   const handleRemoveClick = (id: string) => {
-    setResourceList((prevList) =>
+    updateResourceList((prevList) =>
       prevList.filter((list) => {
         return list.id !== id
       })
     )
     if (currentResourceId === id) {
-      onSetCurrentResource(null)
+      updateCurrentResource(null)
     }
   }
 

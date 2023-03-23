@@ -1,16 +1,22 @@
-import { ResourceSchema } from "../../resource/type"
+import { useResourceContext } from "../../resource/components/ResourceProvider"
+
 import { ResourceViewer } from "../components/ResourceViewer"
 
-interface ResourceViewerTemplateProps {
-  currentResource: ResourceSchema
-  onCloseClick: () => void
-}
+export const ResourceViewerTemplate = () => {
+  const { currentResource, updateCurrentResource } = useResourceContext()
 
-export const ResourceViewerTemplate = ({
-  currentResource,
-  onCloseClick,
-}: ResourceViewerTemplateProps) => {
+  const handleCloseClick = () => {
+    updateCurrentResource(null)
+  }
+
   return (
-    <ResourceViewer resource={currentResource} onCloseClick={onCloseClick} />
+    <>
+      {currentResource && (
+        <ResourceViewer
+          resource={currentResource}
+          onCloseClick={handleCloseClick}
+        />
+      )}
+    </>
   )
 }
