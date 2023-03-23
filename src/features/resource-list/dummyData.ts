@@ -1,4 +1,4 @@
-import { ResourceSchema } from "./type"
+import { ResourceSchema } from "../resource/type"
 
 export const resourceDummyList: ResourceSchema[] = [
   {

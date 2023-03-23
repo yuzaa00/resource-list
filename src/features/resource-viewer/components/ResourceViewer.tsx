@@ -1,7 +1,7 @@
 import { TypedIcon } from "typed-design-system"
 import { styled } from "../../../stitches.config"
 import { VStack } from "../../common/components/Stack"
-import { ResourceSchema } from "../../resource-list/type"
+import { ResourceSchema } from "../../resource/type"
 
 interface ResourceViewerProps {
   resource: ResourceSchema

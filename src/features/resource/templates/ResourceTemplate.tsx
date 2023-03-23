@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { styled } from "../../../stitches.config"
 import { ResourceListTemplate } from "../../resource-list/templates/ResourceListTemplate"
-import { ResourceSchema } from "../../resource-list/type"
+import { ResourceSchema } from "../type"
 import { ResourceViewerTemplate } from "../../resource-viewer/templates/ResourceViewerTemplate"
 
 export const ResourceTemplate = () => {

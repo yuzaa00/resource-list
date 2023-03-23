@@ -3,9 +3,9 @@ import { ResourceImageTemplate } from "./ResourceImageTemplate"
 import { ResourceUrlTemplate } from "./ResourceUrlTemplate"
 import { styled } from "../../../stitches.config"
 import { VStack } from "../../common/components/Stack"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceItem } from "../components/ResourceItem"
 import { resourceDummyList } from "../dummyData"
-import { ResourceSchema } from "../type"
 
 interface ResourceListTemplateProps {
   currentResourceId?: string

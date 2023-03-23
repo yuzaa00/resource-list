@@ -2,8 +2,8 @@ import { ChangeEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
 import { errorMessages } from "../../common/constant"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceAddButton } from "../components/ResourceAddButton"
-import { ResourceSchema } from "../type"
 import { controlValidation } from "../utils/controlValidation"
 
 interface ResourceIamgeTemplateProps {

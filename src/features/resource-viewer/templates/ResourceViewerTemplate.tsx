@@ -1,4 +1,4 @@
-import { ResourceSchema } from "../../resource-list/type"
+import { ResourceSchema } from "../../resource/type"
 import { ResourceViewer } from "../components/ResourceViewer"
 
 interface ResourceViewerTemplateProps {
