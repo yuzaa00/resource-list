@@ -2,6 +2,7 @@ import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from "react"
 import { TypedIcon } from "typed-design-system"
 import { styled } from "../../../stitches.config"
 import { Input } from "../../common/components/Input"
+import { useFocus } from "../../common/hooks/useFocus"
 
 interface ResourceItemProps {
   defaultName: string
@@ -18,6 +19,8 @@ export const ResourceItem = ({
   onEditClick,
   onRemoveClick,
 }: ResourceItemProps) => {
+  const inputRef = useFocus()
+
   const [name, setName] = useState(defaultName)
   const [isEditMode, setEditMode] = useState(false)
 
@@ -51,6 +54,7 @@ export const ResourceItem = ({
     <ItemWrapper isActive={isActive} onClick={handleItemClick}>
       {isEditMode ? (
         <Input
+          ref={inputRef}
           value={name}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}

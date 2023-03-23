@@ -1,53 +1,54 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { ResourceImageTemplate } from "./ResourceImageTemplate"
 import { ResourceUrlTemplate } from "./ResourceUrlTemplate"
 import { styled } from "../../../stitches.config"
 import { HStack, VStack } from "../../common/components/Stack"
+import { useResourceContext } from "../../resource/components/ResourceProvider"
 import { ResourceSchema } from "../../resource/type"
 import { ResourceItem } from "../components/ResourceItem"
-import { resourceDummyList } from "../dummyData"
+import { setListToLocalStorage } from "../utils/localStorage"
 
-interface ResourceListTemplateProps {
-  currentResourceId?: string
-  onSetCurrentResource: (resource: ResourceSchema | null) => void
-}
+export const ResourceListTemplate = () => {
+  const navigate = useNavigate()
+  const { currentResourceId } = useParams()
+  const { resourceList, updateResourceList, updateCurrentResource } =
+    useResourceContext()
 
-export const ResourceListTemplate = ({
-  currentResourceId,
-  onSetCurrentResource,
-}: ResourceListTemplateProps) => {
-  const [resourceList, setResourceList] = useState(resourceDummyList)
-
-  const handleAddResourceList = (newList: ResourceSchema) => {
-    setResourceList((prevList) => [newList, ...prevList])
+  const handleAddResourceList = (newResource: ResourceSchema) => {
+    updateResourceList((prevList) => [newResource, ...prevList])
   }
 
   const handleItemClick = (resource: ResourceSchema) => () => {
-    onSetCurrentResource(resource)
+    updateCurrentResource(resource)
+    navigate(`/${resource.id}`)
   }
 
   const handleEditClick = (resource: ResourceSchema) => (name: string) => {
-    setResourceList((prevList) =>
+    updateResourceList((prevList) =>
       prevList.map((list) =>
         list.id === resource.id ? { ...list, name } : list
       )
     )
-
     if (currentResourceId === resource.id) {
-      onSetCurrentResource({ ...resource, name })
+      updateCurrentResource({ ...resource, name })
     }
   }
 
   const handleRemoveClick = (id: string) => {
-    setResourceList((prevList) =>
+    updateResourceList((prevList) =>
       prevList.filter((list) => {
         return list.id !== id
       })
     )
     if (currentResourceId === id) {
-      onSetCurrentResource(null)
+      updateCurrentResource(null)
     }
   }
+
+  useEffect(() => {
+    setListToLocalStorage(resourceList)
+  }, [resourceList])
 
   return (
     <StyledResourceListWrapper>
@@ -60,14 +61,14 @@ export const ResourceListTemplate = ({
         </VStack>
       </StyledResourceButtonsWrapper>
       <VStack css={{ padding: "10px", gap: "10px" }}>
-        {resourceList.map((rsc) => (
-          <Fragment key={rsc.id}>
+        {resourceList.map((resource) => (
+          <Fragment key={resource.id}>
             <ResourceItem
-              defaultName={rsc.name}
-              isActive={rsc.id === currentResourceId}
-              onItemClick={handleItemClick(rsc)}
-              onEditClick={handleEditClick(rsc)}
-              onRemoveClick={() => handleRemoveClick(rsc.id)}
+              defaultName={resource.name}
+              isActive={resource.id === currentResourceId}
+              onItemClick={handleItemClick(resource)}
+              onEditClick={handleEditClick(resource)}
+              onRemoveClick={() => handleRemoveClick(resource.id)}
             />
           </Fragment>
         ))}

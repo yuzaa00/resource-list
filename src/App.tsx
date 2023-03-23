@@ -1,15 +1,27 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
-import { MainTemplate } from "./features/main/templates/MainTemplate"
+import { MainPage } from "./pages/main"
 import { globalStyles } from "./stitches.config"
 import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   globalStyles()
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainPage />,
+    },
+    {
+      path: "/:currentResourceId",
+      element: <MainPage />,
+    },
+  ])
+
   return (
     <>
-      <MainTemplate />
       <ToastContainer />
+      <RouterProvider router={router} />
     </>
   )
 }

@@ -1,7 +1,8 @@
 import { ChangeEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { styled } from "../../../stitches.config"
-import { errorMessages } from "../../common/constant"
+import { errorMessages, successMessage } from "../../common/constant"
+import { AddResourceError } from "../../common/customError"
 import { ResourceSchema } from "../../resource/type"
 import { ResourceAddButton } from "../components/ResourceAddButton"
 import { controlValidation } from "../utils/controlValidation"
@@ -22,12 +23,12 @@ export const ResourceImageTemplate = ({
     PNG: "image/png",
   }
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files: selectedFiles } = e.target
 
-    const processUpload = async () => {
+    const addFile = async () => {
       if (!selectedFiles) {
-        return toast("선택된 파일이 없습니다", { type: "error" })
+        throw new AddResourceError(errorMessages.NO_FILE_SELECTED, "invalid")
       }
 
       const isAcceptableFile = Array.from(selectedFiles).every((file) =>
@@ -35,17 +36,16 @@ export const ResourceImageTemplate = ({
       )
 
       if (!isAcceptableFile) {
-        return toast(
-          `${Object.keys(acceptableMimeType).join(
-            ","
-          )} 파일만 업로드할 수 있어요`,
-          { type: "error" }
+        throw new AddResourceError(
+          errorMessages.UNACCEPTABLE_FILE(
+            Object.keys(acceptableMimeType).join(",")
+          ),
+          "invalid"
         )
       }
 
       Array.from(selectedFiles).forEach((file) => {
         const reader = new FileReader()
-
         reader.onload = () => {
           onAddResourceList({
             id: self.crypto.randomUUID(),
@@ -55,24 +55,28 @@ export const ResourceImageTemplate = ({
           })
         }
         reader.onerror = () => {
-          toast(errorMessages.FAILED_REQUEST, { type: "error" })
+          throw new AddResourceError(errorMessages.FAILED_REQUEST, "failed")
         }
         reader.readAsDataURL(file)
       })
     }
 
-    setLoading(true)
-    controlValidation()
-      .then(processUpload)
-      .then(() => toast("등록에 성공했어요", { type: "success" }))
-      .catch((error) => {
-        toast(error, { type: "error" })
-      })
-      .finally(() => {
-        setLoading(false)
-        if (!fileRef.current) return
-        fileRef.current.value = ""
-      })
+    try {
+      setLoading(true)
+
+      await controlValidation()
+      await addFile()
+
+      toast(successMessage.SUCCESS_REQUEST, { type: "success" })
+    } catch (error) {
+      if (error instanceof AddResourceError) {
+        toast(error.message, { type: "error" })
+      }
+    } finally {
+      setLoading(false)
+      /** 인풋 초기화 */
+      if (fileRef.current) fileRef.current.value = ""
+    }
   }
 
   return (
