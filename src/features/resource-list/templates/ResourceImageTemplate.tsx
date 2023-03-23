@@ -7,11 +7,11 @@ import { ResourceAddButton } from "../components/ResourceAddButton"
 import { controlValidation } from "../utils/controlValidation"
 
 interface ResourceIamgeTemplateProps {
-  setResourceList: (resource: ResourceSchema) => void
+  onAddResourceList: (resource: ResourceSchema) => void
 }
 
 export const ResourceImageTemplate = ({
-  setResourceList,
+  onAddResourceList,
 }: ResourceIamgeTemplateProps) => {
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -47,7 +47,7 @@ export const ResourceImageTemplate = ({
         const reader = new FileReader()
 
         reader.onload = () => {
-          setResourceList({
+          onAddResourceList({
             id: self.crypto.randomUUID(),
             name: file.name,
             url: reader.result as string,

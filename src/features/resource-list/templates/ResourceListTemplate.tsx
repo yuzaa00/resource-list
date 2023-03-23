@@ -18,7 +18,7 @@ export const ResourceListTemplate = ({
 }: ResourceListTemplateProps) => {
   const [resourceList, setResourceList] = useState(resourceDummyList)
 
-  const handleResourceList = (newList: ResourceSchema) => {
+  const handleAddResourceList = (newList: ResourceSchema) => {
     setResourceList((prevList) => [newList, ...prevList])
   }
 
@@ -40,10 +40,10 @@ export const ResourceListTemplate = ({
     <StyledResourceListWrapper>
       <StyledResourceButtonsWrapper>
         <VStack css={{ flexBasis: 1, flexGrow: 1 }}>
-          <ResourceUrlTemplate setResourceList={handleResourceList} />
+          <ResourceUrlTemplate onAddResourceList={handleAddResourceList} />
         </VStack>
         <VStack css={{ flexBasis: 1, flexGrow: 1 }}>
-          <ResourceImageTemplate setResourceList={handleResourceList} />
+          <ResourceImageTemplate onAddResourceList={handleAddResourceList} />
         </VStack>
       </StyledResourceButtonsWrapper>
       <VStack css={{ padding: "10px", gap: "10px" }}>
